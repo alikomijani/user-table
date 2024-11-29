@@ -8,6 +8,7 @@ function App() {
     { id: 2, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
     { id: 5, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
     { id: 3, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
+    { id: 6, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
   ]);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
