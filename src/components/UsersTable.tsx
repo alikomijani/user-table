@@ -11,14 +11,24 @@ export type User = {
 type Props = {
   users: User[];
   onDeleteUser: (id: number) => void;
+  onUpdateUser: (user: User) => void;
 };
-export default function UsersTable({ users, onDeleteUser }: Props) {
+export default function UsersTable({
+  users,
+  onDeleteUser,
+  onUpdateUser,
+}: Props) {
   return (
     <table className="border">
       <UserTableHead />
       <tbody>
         {users.map((user) => (
-          <UserRow key={user.id} user={user} onDeleteUser={onDeleteUser} />
+          <UserRow
+            key={user.id}
+            user={user}
+            onDeleteUser={onDeleteUser}
+            onUpdateUser={onUpdateUser}
+          />
         ))}
       </tbody>
     </table>
