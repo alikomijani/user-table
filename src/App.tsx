@@ -2,9 +2,17 @@ import { useState } from "react";
 import UsersTable, { User } from "./components/UsersTable";
 import UserForm from "./components/UserForm";
 
+const DEFAULTS_USERS = [
+  { id: 1, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
+  { id: 2, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
+  { id: 5, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
+  { id: 3, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
+  { id: 6, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
+];
+
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
   const [user, setUser] = useState<User>();
+  const [users, setUsers] = useState<User[]>(DEFAULTS_USERS);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
