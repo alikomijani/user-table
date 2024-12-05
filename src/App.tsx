@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UsersTable, { User } from "./components/UsersTable";
 import UserForm from "./components/UserForm";
 import classNames from "classnames";
+import { createUser, getUsers } from "./api/users";
 
 function App() {
   const [user, setUser] = useState<User>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -16,9 +19,9 @@ function App() {
       );
       setUser(undefined);
     } else {
-      setUsers((old) => {
-        const max = Math.max(...old.map((user) => user.id));
-        return [...old, { ...newUser, id: max + 1 }];
+      const id = Math.max(...users.map((user) => user.id)) + 1;
+      createUser({ ...newUser, id }).then(() => {
+        updateUsers();
       });
     }
     event.currentTarget.reset();
@@ -29,16 +32,44 @@ function App() {
   const handleUpdateUser = (currentUser: User) => {
     setUser(currentUser);
   };
+
+  const updateUsers = async () => {
+    setIsLoading(true);
+    try {
+      const res = await getUsers();
+      setUsers(res.data);
+      setError(false);
+    } catch {
+      setError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    updateUsers();
+  }, []);
+
   return (
     <div
       className={classNames(`container mx-auto p-2 `, { "bg-red-400": !!user })}
     >
       <div className="flex items-start gap-3 card">
-        <UsersTable
-          users={users}
-          onDeleteUser={handleDeleteUser}
-          onUpdateUser={handleUpdateUser}
-        />
+        {error && (
+          <div>
+            در برقراری ارتباط با سرور خطایی رخ داده! لطفا بعدا تلاش نمایید
+            <button onClick={updateUsers}>تلاش مجدد</button>
+          </div>
+        )}
+        {!error && isLoading && "دیتا در حال لود شدن هست"}
+
+        {!error && !isLoading && (
+          <UsersTable
+            users={users}
+            onDeleteUser={handleDeleteUser}
+            onUpdateUser={handleUpdateUser}
+          />
+        )}
         <UserForm onSubmit={handleSubmit} currentUser={user} />
       </div>
     </div>

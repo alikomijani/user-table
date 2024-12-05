@@ -5,15 +5,49 @@
       "name": "Ali",
       "lastName": "komijani",
       "email": "a.komijani@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "Ali",
+      "lastName": "Komij",
+      "email": "a.gmail.com"
+    },
+    {
+      "id": 3,
+      "name": "Colin Vincent",
+      "lastName": "Barrett",
+      "email": "hywyxu@mailinator.com"
+    },
+    {
+      "id": 4,
+      "name": "Paloma Shepard",
+      "lastName": "Knapp",
+      "email": "duhe@mailinator.com"
     }
   ],
   "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 }
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    }
   ],
   "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1" },
-    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
   ],
   "profile": {
     "name": "typicode"
