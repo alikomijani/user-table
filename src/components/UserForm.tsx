@@ -1,5 +1,6 @@
 import { User } from "./UsersTable";
-
+import classes from "./user-from.module.css";
+import tableClasses from "./user-table.module.css";
 type Props = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   currentUser: User | undefined;
@@ -7,9 +8,9 @@ type Props = {
 
 export default function UserForm({ onSubmit, currentUser }: Props) {
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className={classes.card}>
       <div className="flex flex-col gap-3 p-2">
-        <div>
+        <div className={tableClasses.card}>
           <label htmlFor="name">name: </label>
           <input
             className="block px-2 py-1 border"

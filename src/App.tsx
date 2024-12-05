@@ -1,18 +1,11 @@
 import { useState } from "react";
 import UsersTable, { User } from "./components/UsersTable";
 import UserForm from "./components/UserForm";
-
-const DEFAULTS_USERS = [
-  { id: 1, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
-  { id: 2, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
-  { id: 5, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
-  { id: 3, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
-  { id: 6, name: "ali", lastName: "komijani", email: "ali@gmail.com" },
-];
+import classNames from "classnames";
 
 function App() {
   const [user, setUser] = useState<User>();
-  const [users, setUsers] = useState<User[]>(DEFAULTS_USERS);
+  const [users, setUsers] = useState<User[]>([]);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -37,8 +30,10 @@ function App() {
     setUser(currentUser);
   };
   return (
-    <div className="container mx-auto p-2">
-      <div className="flex items-start gap-3">
+    <div
+      className={classNames(`container mx-auto p-2 `, { "bg-red-400": !!user })}
+    >
+      <div className="flex items-start gap-3 card">
         <UsersTable
           users={users}
           onDeleteUser={handleDeleteUser}

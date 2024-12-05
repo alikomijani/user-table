@@ -1,5 +1,7 @@
+import classNames from "classnames";
 import UserRow from "./UserRow";
 import UserTableHead from "./UserTableHead";
+import classes from "./user-from.module.css";
 
 export type User = {
   id: number;
@@ -19,7 +21,7 @@ export default function UsersTable({
   onUpdateUser,
 }: Props) {
   return (
-    <table className="border">
+    <table className={classNames("border", classes.card)}>
       <UserTableHead />
       <tbody>
         {users.map((user) => (
