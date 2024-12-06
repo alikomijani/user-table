@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import UsersTable, { User } from "./components/UsersTable";
 import UserForm from "./components/UserForm";
 import classNames from "classnames";
@@ -9,6 +9,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [sort, setSort] = useState<string>("-id");
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -21,7 +23,7 @@ function App() {
     } else {
       const id = Math.max(...users.map((user) => user.id)) + 1;
       createUser({ ...newUser, id }).then(() => {
-        updateUsers();
+        getUsersFn();
       });
     }
     event.currentTarget.reset();
@@ -33,10 +35,14 @@ function App() {
     setUser(currentUser);
   };
 
-  const updateUsers = async () => {
+  const getUsersFn = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await getUsers();
+      const res = await getUsers({
+        params: {
+          _sort: sort,
+        },
+      });
       setUsers(res.data);
       setError(false);
     } catch {
@@ -44,11 +50,11 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [sort]);
 
   useEffect(() => {
-    updateUsers();
-  }, []);
+    getUsersFn();
+  }, [sort]);
 
   return (
     <div
@@ -58,13 +64,15 @@ function App() {
         {error && (
           <div>
             در برقراری ارتباط با سرور خطایی رخ داده! لطفا بعدا تلاش نمایید
-            <button onClick={updateUsers}>تلاش مجدد</button>
+            <button onClick={getUsersFn}>تلاش مجدد</button>
           </div>
         )}
         {!error && isLoading && "دیتا در حال لود شدن هست"}
 
         {!error && !isLoading && (
           <UsersTable
+            sort={sort}
+            onSort={setSort}
             users={users}
             onDeleteUser={handleDeleteUser}
             onUpdateUser={handleUpdateUser}

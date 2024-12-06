@@ -14,15 +14,19 @@ type Props = {
   users: User[];
   onDeleteUser: (id: number) => void;
   onUpdateUser: (user: User) => void;
+  sort: string;
+  onSort: (sort: string) => void;
 };
 export default function UsersTable({
   users,
   onDeleteUser,
   onUpdateUser,
+  sort,
+  onSort,
 }: Props) {
   return (
     <table className={classNames("border", classes.card)}>
-      <UserTableHead />
+      <UserTableHead sort={sort} onSort={onSort} />
       <tbody>
         {users.map((user) => (
           <UserRow
